@@ -1,5 +1,3 @@
-uglify = require 'uglify-js'
-
 module.exports =
   config:
     jqueryVersion:
@@ -83,15 +81,12 @@ module.exports =
       else
         code = content
 
-      # Call uglify to get rid of spaces, new lines, etc.
-      ug = uglify.minify(code, { fromString: true })
-
       out = ''
 
       if options.link
         out = @linkPrefix
 
-      out = out + @header + encodeURIComponent(ug.code) + @footer
+      out = out + @header + encodeURIComponent(code.replace(/\s/gm,'')) + @footer
 
       if options && options.link
         out = out + @linkSuffix
